@@ -6,6 +6,7 @@ import Signup from './Pages/Signup'
 
 import Header from './Component/Header'
 import Posts from './Pages/Posts'
+import About from './Pages/About'
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
         <Route path='/sign-in' element= {<Signin/>} />
         <Route path='/sign-up' element= {<Signup/>} />
         <Route path='/blog-post' element= {<Posts/>}/>
+        <Route path='/about' element= {<About/>}/>
       </Routes>
     </BrowserRouter>
   )
