@@ -11,7 +11,7 @@ const Header = () => {
 
   return (
     <div>
-      <Navbar className='border-b-2 fixed w-screen top-0 z-50'>
+      <Navbar className='border-b-2'>
         <Link to= "/" className='font-semibold self-center whitespace-nowrap text-sm dark:text-white'>
             <span className='bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-lg text-white px-2 py-1'>Writers</span>
             <span className=''>Wanderlust</span>

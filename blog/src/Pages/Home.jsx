@@ -19,7 +19,6 @@ const Home = () => {
       </div>
 
       <div>
-        <MainCard />
       </div>
     </div>
   )
