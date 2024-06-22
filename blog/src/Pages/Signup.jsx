@@ -98,8 +98,6 @@ const Signup = () => {
         }
         </Card>
       </div>
-
-
     </div>
 
   )
