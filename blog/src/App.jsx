@@ -9,21 +9,25 @@ import Posts from './Pages/Posts'
 import About from './Pages/About'
 import Dashboard from './Pages/Dashboard'
 import Footer from './Component/Footer'
+import PrivateRoute from './Component/PrivateRoute'
 
 const App = () => {
   return (
     <BrowserRouter>
-      <Header/>
+      <Header />
       <Routes>
-        <Route path='/' element= {<Home/>} />
-        <Route path='/home' element= {<Home/>} />
-        <Route path='/sign-in' element= {<Signin/>} />
-        <Route path='/sign-up' element= {<Signup/>} />
-        <Route path='/blog-post' element= {<Posts/>}/>
-        <Route path='/about' element= {<About/>}/>
-        <Route path='/dashboard' element= {<Dashboard/>}/>
+        <Route path='/' element={<Home />} />
+        <Route path='/home' element={<Home />} />
+        <Route path='/sign-in' element={<Signin />} />
+        <Route path='/sign-up' element={<Signup />} />
+        <Route path='/blog-post' element={<Posts />} />
+        <Route path='/about' element={<About />} />
+        <Route element={<PrivateRoute />}>
+          <Route path='/dashboard' element={<Dashboard />} />
+        </Route>
+
       </Routes>
-      <Footer/>
+      <Footer />
     </BrowserRouter>
   )
 }
