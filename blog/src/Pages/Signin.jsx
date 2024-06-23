@@ -4,6 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Alert, Button, Card, Label, Spinner, TextInput } from "flowbite-react";
 import { useDispatch, useSelector } from 'react-redux';
 import { signInStart, signInSuccess, signInFailure } from '../Redux/user/userSlice';
+import OAuth from '../Component/OAuth';
 
 
 const Signin = () => {
@@ -82,6 +83,7 @@ const Signin = () => {
                 ) : 'Log In'
               }
             </Button>
+            <OAuth/>
           </form>
           <div>
             <span className="">Don't have an account?
