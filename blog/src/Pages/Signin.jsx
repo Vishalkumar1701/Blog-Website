@@ -10,7 +10,7 @@ import OAuth from '../Component/OAuth';
 const Signin = () => {
 
   const [formData, setFormData] = useState({});
-  const { loading, error: errorMessage } = useSelector(state => state.user);
+  const { loading, error: errorMessage } = useSelector((state) => state.user);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -62,7 +62,7 @@ const Signin = () => {
           <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
             <div>
               <div className="mb-2 block">
-                <Label htmlFor="email" value="Enter Username" />
+                <Label htmlFor="email" value="Enter Email" />
               </div>
               <TextInput id="email" type="email" placeholder="xyz@gmail.com" required onChange={handleChange} />
             </div>
@@ -80,7 +80,7 @@ const Signin = () => {
                     <Spinner size='sm' />
                     <span className='pl-3'>Loading...</span>
                   </>
-                ) : 'Log In'
+                ) : ('Log In')
               }
             </Button>
             <OAuth/>

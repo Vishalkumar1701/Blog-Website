@@ -43,7 +43,7 @@ const Signup = () => {
   }
 
   return (
-    <div className='bg-slate-200 min-h-screen'>
+    <div className='bg-slate-200 min-h-screen pb-5'>
       <div className='pt-24 font-bold lg:text-5xl md:text-4xl text-center'>
         <span className='bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-lg text-white px-2 py-1'>Writers</span>
         <span className=''>Wanderlust</span>
