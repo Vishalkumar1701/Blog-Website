@@ -192,7 +192,7 @@ const Dashprofile = () => {
 
         <TextInput type='password' id='password' placeholder='Password' onChange={handleChange}/>
 
-        <Button type='submit' gradientDuoTone='purpleToBlue' outline> Update </Button>
+        <Button type='submit' gradientDuoTone='purpleToBlue' outline disabled= {loading || imageFileUploading }> {loading ? 'Loading...' : 'Update'} </Button>
       </form>
       <div className="text-red-500 flex justify-between mt-5">
         <span className='cursor-pointer' onClick={()=> setShowModel(true)}>
