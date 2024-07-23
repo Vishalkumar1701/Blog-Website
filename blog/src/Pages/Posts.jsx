@@ -1,11 +1,17 @@
-import React from 'react'
-import { Sidebar, Button, TextInput, Card } from 'flowbite-react'
-import { HiUser, HiArrowSmRight, HiSearch } from 'react-icons/hi'
+import React, {useState} from 'react'
+import { Sidebar, Button, TextInput, Card, Modal, Select, FileInput } from 'flowbite-react'
+import { HiSearch } from 'react-icons/hi'
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
+
 import food from '../assets/images/food.jpg'
 import business from '../assets/images/business.jpg'
 
 const Posts = () => {
+  const [openModal, setOpenModal] = useState(false);
+
   return (
+    <>
     <div className='md:flex md:gap-4'>
       <div className="sidebar md:min-h-screen">
         <Sidebar className='w-full md:w-56 md:h-screen '>
@@ -19,7 +25,7 @@ const Posts = () => {
                   className="w-full"
                 />
               </div>
-              <Button gradientMonochrome="success" className='w-full'>
+              <Button gradientMonochrome="success" className='w-full' onClick={()=>setOpenModal(true)}>
                 Write a blog
               </Button>
 
@@ -49,6 +55,37 @@ const Posts = () => {
 
       </div>
     </div>
+    <Modal dismissible show={openModal} onClose={() => setOpenModal(false)}>
+        <Modal.Header>Write a Blog</Modal.Header>
+        <Modal.Body>
+          <form action="">
+            <div className='mb-3'>
+              <TextInput type='text' placeholder='Title' required id='title' className='' />
+            </div>
+
+            <Select className='mb-3'>
+                <option value="uncategorized" >Select a Category</option>
+                <option value="Travel" >Travel</option>
+                <option value="Business" >Business</option>
+                <option value="Food" >Food</option>
+                <option value="Health" >Health</option>
+                <option value="BookReview" >BookReview</option>
+              </Select>
+
+              <div className='flex gap-4 items-center justify-between border-4 border-teal-500 border-dotted p-3 rounded-lg mb-3'>
+                <FileInput type='file' accept='image/*'/>
+                <Button type='button' gradientDuoTone='purpleToBlue' size='sm' outline >
+                  Upload Image
+                </Button>
+              </div>
+              <ReactQuill theme='snow' placeholder='Write Something' className='h-72 mb-12'/>
+
+              <Button type='submit' className='w-full' onClick={() => setOpenModal(false)}>Publish</Button>
+
+          </form>
+        </Modal.Body>
+      </Modal>
+    </>
   )
 }
 

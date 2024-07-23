@@ -1,24 +1,25 @@
-import { Alert, Button, Modal, TextInput } from 'flowbite-react'
 import React, { useEffect, useRef, useState } from 'react'
+import { Alert, Button, Modal, TextInput } from 'flowbite-react'
+import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { getDownloadURL, getStorage, uploadBytesResumable, ref } from 'firebase/storage'
 import { app } from '../firebase'
 import { CircularProgressbar } from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
-import { 
-  updateStart, 
-  updateFailure, 
-  updateSuccess, 
-  deleteUserStart, 
-  deleteUserSuccess, 
+import {
+  updateStart,
+  updateFailure,
+  updateSuccess,
+  deleteUserStart,
+  deleteUserSuccess,
   deleteUserFailure,
   signOutSuccess,
 } from '../Redux/user/userSlice'
-import {HiOutlineExclamationCircle} from 'react-icons/hi'
+import { HiOutlineExclamationCircle } from 'react-icons/hi'
 
 const Dashprofile = () => {
 
-  const { currentUser, error } = useSelector(state => state.user)
+  const { currentUser, error, loading } = useSelector(state => state.user)
 
   const [imageFile, setImageFile] = useState(null);
   const [imageFileUrl, setImageFileUrl] = useState(null);
@@ -70,42 +71,42 @@ const Dashprofile = () => {
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
           setImageFileUrl(downloadURL);
-          setFormData({...formData,profilePicture: downloadURL });
+          setFormData({ ...formData, profilePicture: downloadURL });
           setImageFileUploading(false);
         });
       })
   }
 
   const handleChange = (e) => {
-    setFormData({...formData, [e.target.id]: e.target.value });
+    setFormData({ ...formData, [e.target.id]: e.target.value });
   };
 
-  const handleSubmit = async(e)=> {
+  const handleSubmit = async (e) => {
     setUpdateUserError(null);
     setUpdateUserSuccess(null);
     e.preventDefault();
-    if(Object.keys(formData).length === 0){
+    if (Object.keys(formData).length === 0) {
       setUpdateUserError('No changes made');
       return;
     }
-    if(imageFileUploading){
+    if (imageFileUploading) {
       setUpdateUserError('Please wait for image to upload');
       return;
     }
     try {
       dispatch(updateStart());
-      const res = await fetch(`/api/user/update/${currentUser._id }`,{
-        method : 'PUT',
+      const res = await fetch(`/api/user/update/${currentUser._id}`, {
+        method: 'PUT',
         headers: {
-          'Content-Type' : 'application/json'
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify(formData),
       });
       const data = await res.json();
-      if(!res.ok){
+      if (!res.ok) {
         dispatch(updateFailure(data.message))
         setUpdateUserError(data.message);
-      } else{
+      } else {
         dispatch(updateSuccess(data));
         setUpdateUserSuccess("User's profile updated successfully");
       }
@@ -115,15 +116,15 @@ const Dashprofile = () => {
     }
   }
 
-  const handleDeleteAccount = async() => {
+  const handleDeleteAccount = async () => {
     setShowModel(false);
     try {
       dispatch(deleteUserStart());
-      const res = await fetch(`/api/user/delete/${currentUser._id}`,{
-        method : 'DELETE',
+      const res = await fetch(`/api/user/delete/${currentUser._id}`, {
+        method: 'DELETE',
       });
       const data = await res.json();
-      if(!res.ok){
+      if (!res.ok) {
         dispatch(deleteUserFailure(data.message));
       } else {
         dispatch(deleteUserSuccess(data));
@@ -139,9 +140,9 @@ const Dashprofile = () => {
         method: 'POST',
       });
       const data = await res.json();
-      if(!res.ok) {
+      if (!res.ok) {
         console.log(data.message);
-      } else{
+      } else {
         dispatch(signOutSuccess());
       }
     } catch (error) {
@@ -158,22 +159,22 @@ const Dashprofile = () => {
         <div className='relative w-32 h-32 self-center cursor-pointer overflow-hidden shadow-md rounded-full' onClick={() => filePickerRef.current.click()}>
 
           {imagefileUploadProgress && (
-            <CircularProgressbar value={imagefileUploadProgress || 0} text = {`${imagefileUploadProgress}%`}
-            strokeWidth={5}
-            styles={
-              {
-                root: {
-                  width : '100%',
-                  height: '100%',
-                  position: 'absolute',
-                  top: 0,
-                  left: 0,
-                },
-                path: {
-                  stroke: `rgba(62,152,199, ${imagefileUploadProgress/ 100})`,
-                },
+            <CircularProgressbar value={imagefileUploadProgress || 0} text={`${imagefileUploadProgress}%`}
+              strokeWidth={5}
+              styles={
+                {
+                  root: {
+                    width: '100%',
+                    height: '100%',
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                  },
+                  path: {
+                    stroke: `rgba(62,152,199, ${imagefileUploadProgress / 100})`,
+                  },
+                }
               }
-            }
             />
           )}
 
@@ -183,19 +184,24 @@ const Dashprofile = () => {
         {
           imageFileUploadError &&
           <Alert color='failure'>
-            { imageFileUploadError }
+            {imageFileUploadError}
           </Alert>
         }
         <TextInput type='text' id='username' placeholder='Username' defaultValue={currentUser.username} onChange={handleChange} />
 
         <TextInput type='email' id='email' placeholder='Email' defaultValue={currentUser.email} onChange={handleChange} />
 
-        <TextInput type='password' id='password' placeholder='Password' onChange={handleChange}/>
+        <TextInput type='password' id='password' placeholder='Password' onChange={handleChange} />
 
-        <Button type='submit' gradientDuoTone='purpleToBlue' outline disabled= {loading || imageFileUploading }> {loading ? 'Loading...' : 'Update'} </Button>
+        <Button type='submit' gradientDuoTone='purpleToBlue' outline disabled={loading || imageFileUploading}> {loading ? 'Loading...' : 'Update'} </Button>
       </form>
+      <Link to='/blog-post'>
+        <Button gradientDuoTone="greenToBlue" className='mt-5 w-full'>
+          Create A Post
+        </Button>
+      </Link>
       <div className="text-red-500 flex justify-between mt-5">
-        <span className='cursor-pointer' onClick={()=> setShowModel(true)}>
+        <span className='cursor-pointer' onClick={() => setShowModel(true)}>
           Delete Account
         </span>
         <span className='cursor-pointer' onClick={handleSignOut}>
@@ -209,8 +215,8 @@ const Dashprofile = () => {
           </Alert>
         )
       }{
-        updateUserSuccess && (
-          <Alert color='success' className='mt-5'>
+        updateUserError && (
+          <Alert color='failure' className='mt-5'>
             {updateUserError}
           </Alert>
         )
@@ -232,7 +238,7 @@ const Dashprofile = () => {
                 <Button color='failure' onClick={handleDeleteAccount}>
                   Yes, I am sure.
                 </Button>
-                <Button color='gray' onClick={()=> setShowModel(false)}> Cancel </Button>
+                <Button color='gray' onClick={() => setShowModel(false)}> Cancel </Button>
               </div>
             </div>
           </Modal.Body>

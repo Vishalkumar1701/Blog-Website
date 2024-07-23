@@ -10,6 +10,7 @@ import About from './Pages/About'
 import Dashboard from './Pages/Dashboard'
 import Footer from './Component/Footer'
 import PrivateRoute from './Component/PrivateRoute'
+import adminPrivateRoute from './Component/adminPrivateRoute'
 
 const App = () => {
   return (
@@ -20,10 +21,14 @@ const App = () => {
         <Route path='/home' element={<Home />} />
         <Route path='/sign-in' element={<Signin />} />
         <Route path='/sign-up' element={<Signup />} />
-        <Route path='/blog-post' element={<Posts />} />
         <Route path='/about' element={<About />} />
         <Route element={<PrivateRoute />}>
           <Route path='/dashboard' element={<Dashboard />} />
+          <Route path='/blog-post' element={<Posts />} />
+        </Route>
+
+        <Route element={<adminPrivateRoute />}>
+          
         </Route>
 
       </Routes>
