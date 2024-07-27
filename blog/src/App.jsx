@@ -11,6 +11,7 @@ import Dashboard from './Pages/Dashboard'
 import Footer from './Component/Footer'
 import PrivateRoute from './Component/PrivateRoute'
 import adminPrivateRoute from './Component/adminPrivateRoute'
+import CompletePost from './Pages/completePost'
 
 const App = () => {
   return (
@@ -25,6 +26,7 @@ const App = () => {
         <Route element={<PrivateRoute />}>
           <Route path='/dashboard' element={<Dashboard />} />
           <Route path='/blog-post' element={<Posts />} />
+          <Route path='/blog-post/postId' element={<CompletePost />} />
         </Route>
 
         <Route element={<adminPrivateRoute />}>

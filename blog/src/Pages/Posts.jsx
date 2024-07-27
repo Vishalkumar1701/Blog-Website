@@ -9,14 +9,13 @@ import {CircularProgressbar} from 'react-circular-progressbar'
 import 'react-circular-progressbar/dist/styles.css'
 
 import food from '../assets/images/food.jpg'
-import business from '../assets/images/business.jpg'
-
 const Posts = () => {
   const [openModal, setOpenModal] = useState(false);
   const [file, setFile] = useState(null);
   const [imageUploadProgress, setImageUploadProgress] = useState(null);
   const [imageUploadError, setImageUploadError] = useState(null);
   const [formData, setFormData] = useState({});
+  const [publishError, setPublishError] = useState(null);
 
 
   const handleUploadImage = ()=> {
@@ -54,8 +53,38 @@ const Posts = () => {
     }
   }
 
+  const handleSubmit = async(e) => {
+    e.preventDefault();
+    try {
+      const res = await fetch('/api/post/createpost',{
+        method: 'POST',
+        headers: {
+          'Content-Type' : 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+      const data = await res.json();
+      if(!res.ok){
+        setPublishError(data.message)
+        return
+      }
+      if(data.success === false) {
+        setPublishError(data.message);
+        return;
+      }
+      if(res.ok){
+        setPublishError(null)
+        setFormData(null);
+
+      }
+    } catch (error) {
+      setPublishError('Something went wrong')
+    }
+  }
+
   return (
     <>
+    
     <div className='md:flex md:gap-4'>
       <div className="sidebar md:min-h-screen">
         <Sidebar className='w-full md:w-56 md:h-screen '>
@@ -102,12 +131,16 @@ const Posts = () => {
     <Modal dismissible show={openModal} onClose={() => setOpenModal(false)}>
         <Modal.Header>Write a Blog</Modal.Header>
         <Modal.Body>
-          <form action="">
+          <form action="" onSubmit={handleSubmit}>
             <div className='mb-3'>
-              <TextInput type='text' placeholder='Title' required id='title' className='' />
+              <TextInput type='text' placeholder='Title' required id='title' className='flex-1' onChange={(e) => {
+                setFormData({...formData, title: e.target.value})
+              }} />
             </div>
 
-            <Select className='mb-3'>
+            <Select className='mb-3' onChange={(e) => {
+              setFormData({...formData, category: e.target.value})
+            }}>
                 <option value="uncategorized" >Select a Category</option>
                 <option value="Travel" >Travel</option>
                 <option value="Business" >Business</option>
@@ -135,9 +168,15 @@ const Posts = () => {
                   <img src={formData.image} alt='upload' className='w-full h-72 object-cover' />
                 )
               }
-              <ReactQuill theme='snow' placeholder='Write Something' className='h-72 mb-12'/>
+              <ReactQuill theme='snow' placeholder='Write Something' className='h-72 mb-12' required onChange={(value) => {
+                setFormData({...formData, content: value})
+              }}/>
+              {
+                publishError && <Alert className='mt-5'>{publishError}</Alert>
+              }
 
-              <Button type='submit' className='w-full' onClick={() => setOpenModal(false)}>Publish</Button>
+              <Button type='submit' className='w-full'>Publish</Button>
+              
 
           </form>
         </Modal.Body>
