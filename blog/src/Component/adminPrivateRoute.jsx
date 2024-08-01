@@ -2,9 +2,9 @@ import React from 'react';
 import { Outlet, Navigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 
-const adminPrivateRoute = () => {
+const AdminPrivateRoute = () => {
   const {currentUser} = useSelector((state) => state.user)
-  return currentUser && currentUser.isAdmin ? (<Outlet /> ): (<Navigate to= '/sign-in'/>)
+  return currentUser && currentUser.isAdmin ? (<Outlet /> ): (<Navigate to= '/dashboard?tab=profile'/>)
 }
 
-export default adminPrivateRoute
+export default AdminPrivateRoute

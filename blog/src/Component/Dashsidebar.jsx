@@ -10,7 +10,7 @@ import { useSelector } from 'react-redux'
 const Dashsidebar = () => {
 
     const dispatch = useDispatch();
-    const {currentUser} = useSelector((state) => state.user);
+    const { currentUser } = useSelector((state) => state.user);
 
     const location = useLocation()
     const [tab, setTab] = useState('')
@@ -25,19 +25,19 @@ const Dashsidebar = () => {
 
     const handleSignOut = async () => {
         try {
-          const res = await fetch('/api/user/signout', {
-            method: 'POST',
-          });
-          const data = await res.json();
-          if(!res.ok) {
-            console.log(data.message);
-          } else{
-            dispatch(signOutSuccess());
-          }
+            const res = await fetch('/api/user/signout', {
+                method: 'POST',
+            });
+            const data = await res.json();
+            if (!res.ok) {
+                console.log(data.message);
+            } else {
+                dispatch(signOutSuccess());
+            }
         } catch (error) {
-          console.log(error.message)
+            console.log(error.message)
         }
-      }
+    }
 
     return (
         <Sidebar className='w-full md:w-56 '>
@@ -48,17 +48,25 @@ const Dashsidebar = () => {
                             Profile
                         </Sidebar.Item>
                     </Link>
-                    <Link to='/dashboard?tab=posts'>
+                    <Link to='/blog-post'>
                         <Sidebar.Item active={tab === 'posts'} icon={HiDocumentText} labelColor='dark' as='div'>
                             Blogs
                         </Sidebar.Item>
                     </Link>
-                    
-                    <Sidebar.Item icon={HiArrowSmRight} labelColor='dark' onClick= {handleSignOut}>
+                    {
+                        currentUser.isAdmin ? 
+                        <Link to='/admindashboard'>
+                            <Sidebar.Item active={tab === 'posts'} icon={HiDocumentText} labelColor='dark' as='div'>
+                                Admin Dashboard
+                            </Sidebar.Item>
+                        </Link> : ''
+                    }
+
+                    <Sidebar.Item icon={HiArrowSmRight} labelColor='dark' onClick={handleSignOut}>
                         Sign out
                     </Sidebar.Item>
 
-                    
+
 
                 </Sidebar.ItemGroup>
             </Sidebar.Items>

@@ -10,8 +10,9 @@ import About from './Pages/About'
 import Dashboard from './Pages/Dashboard'
 import Footer from './Component/Footer'
 import PrivateRoute from './Component/PrivateRoute'
-import adminPrivateRoute from './Component/adminPrivateRoute'
+import AdminPrivateRoute from './Component/adminPrivateRoute'
 import CompletePost from './Pages/completePost'
+import Admindashboard from './Component/Admindashboard'
 
 const App = () => {
   return (
@@ -26,11 +27,11 @@ const App = () => {
         <Route element={<PrivateRoute />}>
           <Route path='/dashboard' element={<Dashboard />} />
           <Route path='/blog-post' element={<Posts />} />
-          <Route path='/blog-post/postId' element={<CompletePost />} />
         </Route>
+        <Route path={`/blog-post/:slug`} element={<CompletePost />} />
 
-        <Route element={<adminPrivateRoute />}>
-          
+        <Route element={<AdminPrivateRoute />}>
+          <Route path='/admindashboard' element={<Admindashboard/>} />
         </Route>
 
       </Routes>
