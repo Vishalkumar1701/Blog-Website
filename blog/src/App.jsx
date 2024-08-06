@@ -28,7 +28,7 @@ const App = () => {
         <Route element={<PrivateRoute />}>
           <Route path='/dashboard' element={<Dashboard />} />
           <Route path='/update-post/:postId' element= {<UpdatePost />} />
-          <Route path='/post/:slug' element={<CompletePost />} />
+          <Route path='/post/:postSlug' element={<CompletePost />} />
         </Route>
       </Routes>
       <Footer />
