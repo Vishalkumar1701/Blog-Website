@@ -5,13 +5,14 @@ import Signin from './Pages/Signin'
 import Signup from './Pages/Signup'
 
 import Header from './Component/Header'
-import Posts from './Pages/Posts'
 import About from './Pages/About'
 import Dashboard from './Pages/Dashboard'
 import Footer from './Component/Footer'
 import PrivateRoute from './Component/PrivateRoute'
 import AdminPrivateRoute from './Component/AdminPrivateRoute'
 import CompletePost from './Pages/completePost'
+import UpdatePost from './Pages/UpdatePost'
+
 
 
 const App = () => {
@@ -26,10 +27,9 @@ const App = () => {
         <Route path='/about' element={<About />} />
         <Route element={<PrivateRoute />}>
           <Route path='/dashboard' element={<Dashboard />} />
-          <Route path='/blog-post' element={<Posts />} />
+          <Route path='/update-post/:postId' element= {<UpdatePost />} />
+          <Route path='/post/:slug' element={<CompletePost />} />
         </Route>
-        <Route path={`/blog-post/:slug`} element={<CompletePost />} />
-
       </Routes>
       <Footer />
     </BrowserRouter>
