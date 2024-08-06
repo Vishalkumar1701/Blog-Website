@@ -10,9 +10,9 @@ import About from './Pages/About'
 import Dashboard from './Pages/Dashboard'
 import Footer from './Component/Footer'
 import PrivateRoute from './Component/PrivateRoute'
-import AdminPrivateRoute from './Component/adminPrivateRoute'
+import AdminPrivateRoute from './Component/AdminPrivateRoute'
 import CompletePost from './Pages/completePost'
-import Admindashboard from './Component/Admindashboard'
+
 
 const App = () => {
   return (
@@ -29,10 +29,6 @@ const App = () => {
           <Route path='/blog-post' element={<Posts />} />
         </Route>
         <Route path={`/blog-post/:slug`} element={<CompletePost />} />
-
-        <Route element={<AdminPrivateRoute />}>
-          <Route path='/admindashboard' element={<Admindashboard/>} />
-        </Route>
 
       </Routes>
       <Footer />

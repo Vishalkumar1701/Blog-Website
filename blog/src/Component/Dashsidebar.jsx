@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Sidebar } from 'flowbite-react'
 import { useDispatch } from 'react-redux'
-import { HiUser, HiArrowSmRight, HiDocumentText } from 'react-icons/hi'
+import { HiUser, HiArrowSmRight, HiDocumentText, HiUserGroup } from 'react-icons/hi'
 import { Link, useLocation } from 'react-router-dom'
 import { signOutSuccess } from '../Redux/user/userSlice'
 import { useSelector } from 'react-redux'
@@ -48,19 +48,23 @@ const Dashsidebar = () => {
                             Profile
                         </Sidebar.Item>
                     </Link>
-                    <Link to='/blog-post'>
-                        <Sidebar.Item active={tab === 'posts'} icon={HiDocumentText} labelColor='dark' as='div'>
-                            Blogs
-                        </Sidebar.Item>
-                    </Link>
                     {
                         currentUser.isAdmin ? 
-                        <Link to='/admindashboard'>
-                            <Sidebar.Item active={tab === 'posts'} icon={HiDocumentText} labelColor='dark' as='div'>
-                                Admin Dashboard
+                        <Link to='/dashboard?tab=users'>
+                            <Sidebar.Item active={tab === 'users'} icon={HiUserGroup} labelColor='dark' as='div'>
+                                Users
                             </Sidebar.Item>
                         </Link> : ''
                     }
+                    {
+                        currentUser.isAdmin ? 
+                        <Link to='/dashboard?tab=posts'>
+                            <Sidebar.Item active={tab === 'posts'} icon={HiDocumentText} labelColor='dark' as='div'>
+                                Blogs
+                            </Sidebar.Item>
+                        </Link> : ''
+                    }
+                    
 
                     <Sidebar.Item icon={HiArrowSmRight} labelColor='dark' onClick={handleSignOut}>
                         Sign out

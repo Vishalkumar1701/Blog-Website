@@ -1,6 +1,5 @@
 import React from 'react'
 import mainimg from '../assets/images/main.jpg'
-import MainCard from '../Component/MainCard'
 
 const Home = () => {
   return (
