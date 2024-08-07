@@ -4,8 +4,13 @@ import food from '../assets/images/food.jpg'
 import { HiClock } from "react-icons/hi";
 import { Badge } from "flowbite-react";
 import { useParams } from 'react-router-dom';
+import {useSelector} from 'react-redux'
+import CommentsSection from '../Component/CommentsSection';
 
 const CompletePost = () => {
+
+    const {currentUser} = useSelector((state) => state.user);
+
     const { postSlug } = useParams();
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
@@ -73,8 +78,13 @@ const CompletePost = () => {
                     </div>
                 </div>
             </Card>
+            <div className='py-5'>
+                <span>Signed In as : <span>@{currentUser.username}</span></span>
+            </div>
             <hr className='my-4' />
             <h2 className='text-5xl font-bold px-2 my-4 dark:text-gray-300 '>Comments</h2>
+
+            <CommentsSection postId={post._id}/>
         </main>
     )
 }
