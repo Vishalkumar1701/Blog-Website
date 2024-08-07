@@ -303,6 +303,7 @@ const Posts = () => {
               <option value="Health" >Health</option>
               <option value="BookReview" >BookReview</option>
               <option value="Personal" >Personal</option>
+              <option value="Educational" >Educational</option>
             </Select>
 
             <div className='flex gap-4 items-center justify-between border-4 border-teal-500 border-dotted p-3 rounded-lg mb-3'>
