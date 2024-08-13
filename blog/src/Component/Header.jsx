@@ -40,9 +40,12 @@ const Header = () => {
                 </Link>
 
                 <div className='flex gap-4 md:order-2 items-center'>
-                    <Button className='' pill outline gradientDuoTone='cyanToBlue'>
-                    <AiOutlineSearch width='3rem' height='2.5rem'/>
-                    </Button>
+                    <Link to='/search'>
+                        <Button className='' pill outline gradientDuoTone='cyanToBlue'>
+                            <AiOutlineSearch width='3rem' height='2.5rem' />
+                        </Button>
+                    </Link>
+
                     <Button className='w-12 h-10 hidden sm:inline' color='gray' pill
                         onClick={() => dispatch(toggleTheme())}
                     >
