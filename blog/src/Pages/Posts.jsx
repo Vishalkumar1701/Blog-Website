@@ -21,11 +21,8 @@ const Posts = () => {
   const [formData, setFormData] = useState({});
   const [publishError, setPublishError] = useState(null);
   const [userPosts, setUserPosts] = useState([]);
-  const [allPosts, setAllPosts] = useState([]);
   const [showUserPosts, setShowUserPosts] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [alertModal, setAlertModal] = useState(false);
-  const [postIdToDelete,setPostIdToDelete] = useState('');
 
 
 
@@ -88,12 +85,13 @@ const Posts = () => {
       if (res.ok) {
         setPublishError(null)
         setFormData({});
-        fetchAllPosts();
+        fetchPostByUserId();
         setOpenModal(false);
 
       }
     } catch (error) {
       setPublishError('Something went wrong')
+      console.log(error.message);
     }
   }
 
@@ -113,44 +111,9 @@ const Posts = () => {
       setLoading(false)
     }
   }
-
-  const fetchAllPosts = async () => {
-    try {
-      setLoading(true);
-      const res = await fetch('/api/post/getposts')
-      const data = await res.json();
-      if (res.ok) {
-        setAllPosts(data.posts);
-        setLoading(false)
-      }
-    } catch (error) {
-      console.log(error);
-      setLoading(false)
-    }
-  }
   useEffect(() => {
-    fetchAllPosts();
+    fetchPostByUserId();
   }, [])
-
-  const deletePost = async () => {
-    setAlertModal(false);
-    try {
-      const res = await fetch(`/api/post/deletepost/${postIdToDelete}/${currentUser._id}`,{
-        method: 'DELETE',
-      });
-      const data = await res.json();
-      if(!res.ok){
-        console.log(data.message);
-      }
-      else{
-        setAllPosts ( (prev) => prev.filter((post) => post._id !== postIdToDelete));
-        setUserPosts ( (prev) => prev.filter((post) => post._id !== postIdToDelete));
-        fetchAllPosts();
-      }
-    } catch (error) {
-      
-    }
-  }
 
   return (
     <>
@@ -163,120 +126,41 @@ const Posts = () => {
               Write a blog
             </Button>
           </div>
-          <div className="myposts m-2">
-            <Button gradientMonochrome="info" className='w-full' onClick={fetchPostByUserId}>
-              Show My Blogs
-            </Button>
-          </div>
         </div>
         <div className=''>
           {loading ? (
             <div className='text-center'>Loading Blogs...</div>
           ) : (
             <>
-              {showUserPosts ? (
-                <>
-                  {userPosts.length > 0 ? (
-                    <Table hoverable className='shadow-md'>
-                      <Table.Head>
-                        <Table.HeadCell>Date Updated</Table.HeadCell>
-                        <Table.HeadCell>Post Image</Table.HeadCell>
-                        <Table.HeadCell>Post Title</Table.HeadCell>
-                        <Table.HeadCell>Category</Table.HeadCell>
-                        {currentUser.isAdmin && (
-                          <>
-                            <Table.HeadCell>Delete</Table.HeadCell>
-                            <Table.HeadCell>Edit</Table.HeadCell>
-                          </>
-                        )}
-                      </Table.Head>
-                      {userPosts.map((post) => (
-                        <Table.Body key={post._id}>
-                          <Table.Row>
-                            <Table.Cell>{new Date(post.updatedAt).toLocaleDateString()}</Table.Cell>
-                            <Table.Cell>
-                              <Link to={`/post/${post.slug}`}>
-                                <img src={post.image} alt={post.title} className='w-20 h-10 object-cover bg-gray-500' />
-                              </Link>
-                            </Table.Cell>
-                            <Table.Cell>
-                              <Link to={`/post/${post.slug}`} className='font-medium text-gray-700 dark:text-white'>
-                                {post.title}
-                              </Link>
-                            </Table.Cell>
-                            <Table.Cell>{post.category}</Table.Cell>
-                            {currentUser.isAdmin && (
-                              <>
-                                <Table.Cell>
-                                  <span className='font-medium text-red-500 hover:underline cursor-pointer'>Delete</span>
-                                </Table.Cell>
-                                <Table.Cell>
-                                  <Link to={`/update-post/${post._id}`} className='text-teal-500 hover:underline cursor-pointer'>Edit</Link>
-                                </Table.Cell>
-                              </>
-                            )}
-                          </Table.Row>
-                        </Table.Body>
-                      ))}
-                    </Table>
-                  ) : (
-                    <div>No User Posts Available</div>
-                  )}
-                </>
+              {showUserPosts && userPosts.length > 0 ? (
+                <Table hoverable className='shadow-md'>
+                  <Table.Head>
+                    <Table.HeadCell>Date Updated</Table.HeadCell>
+                    <Table.HeadCell>Post Image</Table.HeadCell>
+                    <Table.HeadCell>Post Title</Table.HeadCell>
+                    <Table.HeadCell>Category</Table.HeadCell>
+                  </Table.Head>
+                  <Table.Body>
+                    {userPosts.map((post) => (
+                      <Table.Row key={post._id}>
+                        <Table.Cell>{new Date(post.updatedAt).toLocaleDateString()}</Table.Cell>
+                        <Table.Cell>
+                          <Link to={`/post/${post.slug}`}>
+                            <img src={post.image} alt={post.title} className='w-20 h-10 object-cover bg-gray-500' />
+                          </Link>
+                        </Table.Cell>
+                        <Table.Cell>
+                          <Link to={`/post/${post.slug}`} className='font-medium text-gray-700 dark:text-white'>
+                            {post.title}
+                          </Link>
+                        </Table.Cell>
+                        <Table.Cell>{post.category}</Table.Cell>
+                      </Table.Row>
+                    ))}
+                  </Table.Body>
+                </Table>
               ) : (
-                <>
-                  {allPosts.length > 0 ? (
-                    <Table hoverable className='shadow-md'>
-                      <Table.Head>
-                        <Table.HeadCell>Date Updated</Table.HeadCell>
-                        <Table.HeadCell>Post Image</Table.HeadCell>
-                        <Table.HeadCell>Post Title</Table.HeadCell>
-                        <Table.HeadCell>Category</Table.HeadCell>
-                        {currentUser.isAdmin && (
-                          <>
-                            <Table.HeadCell>Delete</Table.HeadCell>
-                            <Table.HeadCell>Edit</Table.HeadCell>
-                          </>
-                        )}
-                      </Table.Head>
-                      {allPosts.map((post) => (
-                        <Table.Body key={post._id}>
-                          <Table.Row>
-                            <Table.Cell>{new Date(post.updatedAt).toLocaleDateString()}</Table.Cell>
-                            <Table.Cell>
-                              <Link to={`/post/${post.slug}`}>
-                                <img src={post.image} alt={post.title} className='w-20 h-10 object-cover bg-gray-500' />
-                              </Link>
-                            </Table.Cell>
-                            <Table.Cell>
-                              <Link to={`/post/${post.slug}`} className='font-medium text-gray-700 dark:text-white'>
-                                {post.title}
-                              </Link>
-                            </Table.Cell>
-                            <Table.Cell>{post.category}</Table.Cell>
-                            {currentUser.isAdmin && (
-                              <>
-                                <Table.Cell>
-                                  <span className='font-medium text-red-500 hover:underline cursor-pointer' onClick={
-                                    () => {
-                                      setAlertModal(true)
-                                      setPostIdToDelete(post._id);
-                                    }
-                                  }>Delete</span>
-                                </Table.Cell>
-                                <Table.Cell>
-                                  <Link to={`/update-post/${post._id}`} className='text-teal-500 hover:underline cursor-pointer'>Edit</Link>
-                                </Table.Cell>
-                              </>
-                            )}
-                          </Table.Row>
-                        </Table.Body>
-                      ))}
-                    </Table>
-                  ) : (
-                    <div>No Posts Available</div>
-                  )}
-                </>
+                <div>No posts found</div>
               )}
             </>
           )}
@@ -337,23 +221,6 @@ const Posts = () => {
 
           </form>
         </Modal.Body>
-      </Modal>
-      <Modal popup show={alertModal} onClose={() => setAlertModal(false)} size='md'>
-        <ModalHeader>
-          Delete Post
-        </ModalHeader>
-        <ModalBody>
-        <h4 className='mb-4'>Are you sure you want to delete this post</h4>
-          <div className='flex justify-center gap-4'>
-            <Button color='failure' onClick={deletePost}>
-              Yes, I'm sure
-            </Button>
-
-            <Button color='gray' onClick={() => setAlertModal(false)}>
-              No, Cancel
-            </Button>
-          </div>
-        </ModalBody>
       </Modal>
     </>
   )

@@ -46,7 +46,7 @@ const SearchPage = () => {
             urlParams.delete('category');
         }
         const searchQuery = urlParams.toString();
-        navigate(`/search?${searchQuery}`);
+        navigate(`/post/search?${searchQuery}`);
     }
 
     const fetchPosts = async (urlParams) => {
@@ -82,7 +82,7 @@ const SearchPage = () => {
             urlParams.delete('category');
         }
         const searchQuery = urlParams.toString();
-        navigate(`/search?${searchQuery}`);
+        navigate(`/post/search?${searchQuery}`);
     }
     const handleChange = (e) => {
         if (e.target.id === 'searchTerm') {
@@ -99,7 +99,23 @@ const SearchPage = () => {
     };
     const handleShowMore = async () => {
         const numberOfPosts = posts.length;
-        // const urlParams = new
+        const startIndex = numberOfPosts;
+        const urlParams = new URLSearchParams(location.search);
+        urlParams.set('startIndex', startIndex);
+        const searchQuery = urlParams.toString();
+        const res = await fetch(`/api/post/getposts?${searchQuery}`);
+        if(!res.ok){
+            return;
+        }
+        if(res.ok){
+            const data = await res.json();
+            setPosts([...posts, ...data.posts]);
+            if(data.posts.length === 9){
+                setShowMore(true);
+            }else{
+                setShowMore(false);
+            }
+        }
     }
 
     return (
@@ -162,7 +178,7 @@ const SearchPage = () => {
                     </div>
 
                     <div className="w-full">
-                        <h1 className='text-3xl font-semibold sm:border-b border-gray-500 p-3 mt-5'>Posts Results</h1>
+                        <h2 className='text-5xl font-bold dark:text-gray-300 sm:border-b border-gray-500 p-3 mt-5 '>Posts</h2>
 
                         <div className='p-7 flex flex-wrap gap-4'>
                             {

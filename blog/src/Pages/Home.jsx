@@ -35,7 +35,7 @@ const Home = () => {
           renderImage={() => <img src={food} className='max-h-56 object-cover transition-transform duration-300 transform hover:scale-105' alt="image 1" />}
         >
           <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-            Food Vlog
+            Food Blog
           </h5>
           <p className="font-normal text-gray-700 dark:text-gray-400">
             "Every meal is a journey, a story told through flavors that dance on your taste buds and memories that linger long after the last bite."
@@ -59,7 +59,7 @@ const Home = () => {
           renderImage={() => <img src={health} className='min-h-56 object-cover transition-transform duration-300 transform hover:scale-105' alt="image 1" />}
         >
           <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-            Health Vlogs
+            Health Blogs
           </h5>
           <p className="font-normal text-gray-700 dark:text-gray-400">
             "Health is not just about the absence of illness; it's about thriving in mind, body, and spirit, embracing each day with vitality and joy."
@@ -71,7 +71,7 @@ const Home = () => {
           renderImage={() => <img src={personal} className='min-h-56 object-cover transition-transform duration-300 transform hover:scale-105' alt="image 1" />}
         >
           <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-            Personal Vlog
+            Personal Blog
           </h5>
           <p className="font-normal text-gray-700 dark:text-gray-400">
             "We are dreamers and doers, passionate about sharing stories and experiences that inspire, connect, and transform."
@@ -83,7 +83,7 @@ const Home = () => {
           renderImage={() => <img src={travel} className='min-h-56 object-cover transition-transform duration-300 transform hover:scale-105' alt="image 1" />}
         >
           <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-            Travel Vlog
+            Travel Blog
           </h5>
           <p className="font-normal text-gray-700 dark:text-gray-400">
             "Travel is the art of discovering new horizons and the thrill of finding home in the most unexpected places."

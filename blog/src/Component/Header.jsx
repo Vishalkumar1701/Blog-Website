@@ -40,7 +40,7 @@ const Header = () => {
                 </Link>
 
                 <div className='flex gap-4 md:order-2 items-center'>
-                    <Link to='/search'>
+                    <Link to='/post/search'>
                         <Button className='' pill outline gradientDuoTone='cyanToBlue'>
                             <AiOutlineSearch width='3rem' height='2.5rem' />
                         </Button>
@@ -91,7 +91,7 @@ const Header = () => {
                         </Link>
                     </Navbar.Link>
                     <Navbar.Link active={path === '/blog-post'} as={'div'}>
-                        <Link to='dashboard?tab=posts'>
+                        <Link to='/post/search'>
                             Posts
                         </Link>
                     </Navbar.Link>

@@ -21,16 +21,18 @@ const App = () => {
     <BrowserRouter>
       <Header />
       <Routes>
+
         <Route path='/' element={<Home />} />
         <Route path='/home' element={<Home />} />
         <Route path='/sign-in' element={<Signin />} />
         <Route path='/sign-up' element={<Signup />} />
         <Route path='/about' element={<About />} />
+
         <Route element={<PrivateRoute />}>
           <Route path='/dashboard' element={<Dashboard />} />
-          <Route path='/update-post/:postId' element= {<UpdatePost />} />
+          <Route path='/update-post/:postId' element={<UpdatePost />} />
           <Route path='/post/:postSlug' element={<CompletePost />} />
-          <Route path='/search' element={<SearchPage/>} />
+          <Route path='/post/search' element={<SearchPage />} />
         </Route>
       </Routes>
       <Footer />

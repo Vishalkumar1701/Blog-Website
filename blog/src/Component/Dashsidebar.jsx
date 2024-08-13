@@ -49,29 +49,23 @@ const Dashsidebar = () => {
                         </Sidebar.Item>
                     </Link>
                     {
-                        currentUser.isAdmin ? 
-                        <Link to='/dashboard?tab=users'>
-                            <Sidebar.Item active={tab === 'users'} icon={HiUserGroup} labelColor='dark' as='div'>
-                                Users
-                            </Sidebar.Item>
-                        </Link> : ''
+                        currentUser.isAdmin ?
+                            <Link to='/dashboard?tab=users'>
+                                <Sidebar.Item active={tab === 'users'} icon={HiUserGroup} labelColor='dark' as='div'>
+                                    Users
+                                </Sidebar.Item>
+                            </Link> : ''
                     }
-                    {
-                        currentUser.isAdmin ? 
-                        <Link to='/dashboard?tab=posts'>
-                            <Sidebar.Item active={tab === 'posts'} icon={HiDocumentText} labelColor='dark' as='div'>
-                                Blogs
-                            </Sidebar.Item>
-                        </Link> : ''
-                    }
-                    
+                    <Link to='/dashboard?tab=posts'>
+                        <Sidebar.Item active={tab === 'posts'} icon={HiDocumentText} labelColor='dark' as='div'>
+                           My Blogs
+                        </Sidebar.Item>
+                    </Link>
+
 
                     <Sidebar.Item icon={HiArrowSmRight} labelColor='dark' onClick={handleSignOut}>
                         Sign out
                     </Sidebar.Item>
-
-
-
                 </Sidebar.ItemGroup>
             </Sidebar.Items>
         </Sidebar>
