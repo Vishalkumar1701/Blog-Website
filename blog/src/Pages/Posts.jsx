@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Button, TextInput, Modal, Select, FileInput, Alert, Table, TableHeadCell, TableHead, TableBody, TableRow, TableCell, ModalHeader, ModalBody } from 'flowbite-react'
+import { Button, TextInput, Modal, Select, FileInput, Alert, Table, TableHead, TableBody, TableRow, TableCell, ModalHeader, ModalBody } from 'flowbite-react'
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import { getDownloadURL, getStorage, ref, uploadBytesResumable } from 'firebase/storage';
@@ -169,7 +169,7 @@ const Posts = () => {
             </Button>
           </div>
         </div>
-        <div>
+        <div className=''>
           {loading ? (
             <div className='text-center'>Loading Blogs...</div>
           ) : (
@@ -178,45 +178,45 @@ const Posts = () => {
                 <>
                   {userPosts.length > 0 ? (
                     <Table hoverable className='shadow-md'>
-                      <TableHead>
-                        <TableHeadCell>Date Updated</TableHeadCell>
-                        <TableHeadCell>Post Image</TableHeadCell>
-                        <TableHeadCell>Post Title</TableHeadCell>
-                        <TableHeadCell>Category</TableHeadCell>
+                      <Table.Head>
+                        <Table.HeadCell>Date Updated</Table.HeadCell>
+                        <Table.HeadCell>Post Image</Table.HeadCell>
+                        <Table.HeadCell>Post Title</Table.HeadCell>
+                        <Table.HeadCell>Category</Table.HeadCell>
                         {currentUser.isAdmin && (
                           <>
-                            <TableHeadCell>Delete</TableHeadCell>
-                            <TableHeadCell>Edit</TableHeadCell>
+                            <Table.HeadCell>Delete</Table.HeadCell>
+                            <Table.HeadCell>Edit</Table.HeadCell>
                           </>
                         )}
-                      </TableHead>
+                      </Table.Head>
                       {userPosts.map((post) => (
-                        <TableBody key={post._id}>
-                          <TableRow>
-                            <TableCell>{new Date(post.updatedAt).toLocaleDateString()}</TableCell>
-                            <TableCell>
+                        <Table.Body key={post._id}>
+                          <Table.Row>
+                            <Table.Cell>{new Date(post.updatedAt).toLocaleDateString()}</Table.Cell>
+                            <Table.Cell>
                               <Link to={`/post/${post.slug}`}>
                                 <img src={post.image} alt={post.title} className='w-20 h-10 object-cover bg-gray-500' />
                               </Link>
-                            </TableCell>
-                            <TableCell>
+                            </Table.Cell>
+                            <Table.Cell>
                               <Link to={`/post/${post.slug}`} className='font-medium text-gray-700 dark:text-white'>
                                 {post.title}
                               </Link>
-                            </TableCell>
-                            <TableCell>{post.category}</TableCell>
+                            </Table.Cell>
+                            <Table.Cell>{post.category}</Table.Cell>
                             {currentUser.isAdmin && (
                               <>
-                                <TableCell>
+                                <Table.Cell>
                                   <span className='font-medium text-red-500 hover:underline cursor-pointer'>Delete</span>
-                                </TableCell>
-                                <TableCell>
+                                </Table.Cell>
+                                <Table.Cell>
                                   <Link to={`/update-post/${post._id}`} className='text-teal-500 hover:underline cursor-pointer'>Edit</Link>
-                                </TableCell>
+                                </Table.Cell>
                               </>
                             )}
-                          </TableRow>
-                        </TableBody>
+                          </Table.Row>
+                        </Table.Body>
                       ))}
                     </Table>
                   ) : (
@@ -227,50 +227,50 @@ const Posts = () => {
                 <>
                   {allPosts.length > 0 ? (
                     <Table hoverable className='shadow-md'>
-                      <TableHead>
-                        <TableHeadCell>Date Updated</TableHeadCell>
-                        <TableHeadCell>Post Image</TableHeadCell>
-                        <TableHeadCell>Post Title</TableHeadCell>
-                        <TableHeadCell>Category</TableHeadCell>
+                      <Table.Head>
+                        <Table.HeadCell>Date Updated</Table.HeadCell>
+                        <Table.HeadCell>Post Image</Table.HeadCell>
+                        <Table.HeadCell>Post Title</Table.HeadCell>
+                        <Table.HeadCell>Category</Table.HeadCell>
                         {currentUser.isAdmin && (
                           <>
-                            <TableHeadCell>Delete</TableHeadCell>
-                            <TableHeadCell>Edit</TableHeadCell>
+                            <Table.HeadCell>Delete</Table.HeadCell>
+                            <Table.HeadCell>Edit</Table.HeadCell>
                           </>
                         )}
-                      </TableHead>
+                      </Table.Head>
                       {allPosts.map((post) => (
-                        <TableBody key={post._id}>
-                          <TableRow>
-                            <TableCell>{new Date(post.updatedAt).toLocaleDateString()}</TableCell>
-                            <TableCell>
+                        <Table.Body key={post._id}>
+                          <Table.Row>
+                            <Table.Cell>{new Date(post.updatedAt).toLocaleDateString()}</Table.Cell>
+                            <Table.Cell>
                               <Link to={`/post/${post.slug}`}>
                                 <img src={post.image} alt={post.title} className='w-20 h-10 object-cover bg-gray-500' />
                               </Link>
-                            </TableCell>
-                            <TableCell>
+                            </Table.Cell>
+                            <Table.Cell>
                               <Link to={`/post/${post.slug}`} className='font-medium text-gray-700 dark:text-white'>
                                 {post.title}
                               </Link>
-                            </TableCell>
-                            <TableCell>{post.category}</TableCell>
+                            </Table.Cell>
+                            <Table.Cell>{post.category}</Table.Cell>
                             {currentUser.isAdmin && (
                               <>
-                                <TableCell>
+                                <Table.Cell>
                                   <span className='font-medium text-red-500 hover:underline cursor-pointer' onClick={
                                     () => {
                                       setAlertModal(true)
                                       setPostIdToDelete(post._id);
                                     }
                                   }>Delete</span>
-                                </TableCell>
-                                <TableCell>
+                                </Table.Cell>
+                                <Table.Cell>
                                   <Link to={`/update-post/${post._id}`} className='text-teal-500 hover:underline cursor-pointer'>Edit</Link>
-                                </TableCell>
+                                </Table.Cell>
                               </>
                             )}
-                          </TableRow>
-                        </TableBody>
+                          </Table.Row>
+                        </Table.Body>
                       ))}
                     </Table>
                   ) : (

@@ -8,8 +8,6 @@ const FooterCom = () => {
             <Footer.Copyright href="/" by="writers_wanderlust" year={2024} />
             <Footer.LinkGroup>
                 <Footer.Link href="/about">About</Footer.Link>
-                <Footer.Link href="/blog-post">Posts</Footer.Link>
-                <Footer.Link href="#">Licensing</Footer.Link>
                 <Footer.Link href="#">Contact</Footer.Link>
             </Footer.LinkGroup>
         </Footer>

@@ -29,6 +29,7 @@ const App = () => {
           <Route path='/dashboard' element={<Dashboard />} />
           <Route path='/update-post/:postId' element= {<UpdatePost />} />
           <Route path='/post/:postSlug' element={<CompletePost />} />
+          {/* <Route path='/search' element={<Search/>} /> */}
         </Route>
       </Routes>
       <Footer />

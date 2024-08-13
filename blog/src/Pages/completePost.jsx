@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import { Card, Spinner, Button, Modal, ModalBody, ModalHeader } from "flowbite-react";
-import food from '../assets/images/food.jpg'
 import { HiClock } from "react-icons/hi";
 import { Badge } from "flowbite-react";
 import { useParams } from 'react-router-dom';
